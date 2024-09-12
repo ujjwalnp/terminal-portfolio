@@ -50,7 +50,7 @@ const Typewriter = (text, delay, func, Spinner, spinTime) => {
 
 }
 
-function Terminal() {
+function Terminal({ website, github, about }) {
 
   const [Text1, setText1] = useState('');
   const [Text2, setText2] = useState('');
@@ -71,7 +71,7 @@ function Terminal() {
     while (id--) {
       clearInterval(id);
     }
-    setText1("ssh guest@renisal.me")
+    setText1(`ssh guest@${ website }`)
     setText3("Access Granted!")
   }
 
@@ -88,19 +88,19 @@ function Terminal() {
           while (id--) {
             clearInterval(id);
           }
-          setText1("ssh guest@renisal.me")
-          setText2("guest@renisal.me's password:");
+          setText1(`ssh guest@${ website }`)
+          setText2(`guest@${ website }'s password:`);
           setText3("Access Granted!")
         }
         const CommandArea = document.getElementById("command");
         if (CommandArea) {
           previousCommand = CommandArea.value
-          setprevusedCommand(prevArray => [...prevArray, "guest@renisal.me:~$ " + previousCommand])
+          setprevusedCommand(prevArray => [...prevArray, "guest@${ website }:~$ " + previousCommand])
           if (CommandArea.value === "github") {
-            window.open("https://github.com/montymahato", '_blank');
+            window.open(`https://github.com/${ github }`, '_blank');
           }
           else if (CommandArea.value === "mysite") {
-            window.open("https://renisal.me", '_blank');
+            window.open(`https://${ website }`, '_blank');
           }
           else if (CommandArea.value === "source") {
             window.open("https://github.com/montymahato/terminal-portfolio", '_blank');
@@ -111,10 +111,10 @@ function Terminal() {
 
     });
 
-    Typewriter("ssh guest@renisal.me", 100, setText1)
+    Typewriter(`ssh guest@${ website }`, 100, setText1)
 
     setTimeout(() => {
-      setText2("guest@renisal.me's password:▮");
+      setText2(`guest@${ website }'s password:▮`);
     }, 3000);
 
     setTimeout(() => {
@@ -122,11 +122,11 @@ function Terminal() {
     }, 4300);
 
     setTimeout(() => {
-      setText3("Connecting to guest@renisal.me...");
+      setText3(`Connecting to guest@${ website }...`);
     }, 4300);
 
     setTimeout(() => {
-      setText2("guest@renisal.me's password:");
+      setText2(`guest@${ website }'s password:`);
       setText3("> Access granted.");
     }, 7300);
 
@@ -157,7 +157,7 @@ function Terminal() {
 ) : null}
 
         {Text3.includes("Access") ? <span>Welcome! this project is currently under development.</span> : ""}
-        {Text3.includes("Access") ? <span>What is this? It's a terminal simulation, initially created it as a portfolio <a href="https://renisal.me">(https://renisal.me)</a></span> : ""}<br />
+        {Text3.includes("Access") ? <span>What is this? It's a terminal simulation, initially created it as a portfolio <a href={`https://${ website }`}>(https://{ website })</a></span> : ""}<br />
         {Text3.includes("Access") ? <span><span style={{ color: "skyblue" }}>Available Commands:</span></span> : ""}
         {Text3.includes("Access") ? <span><span style={{ color: "#c9c9c9" }}>General: </span> about, discord, play, projects, hacksim, clear</span> : ""}
         {Text3.includes("Access") ? <span><span style={{ color: "#c9c9c9" }}>Links:</span> github, mysite, source</span> : ""}
@@ -191,7 +191,7 @@ function Terminal() {
               </div>
             }
             else if (item.match(new RegExp(`\\b${"mysite"}\\b`, 'g'))) {
-              return <li key={index}>{item}<br></br><br></br><span style={{ color: "#c9c9c9" }}>Opened my personal website in a new tab: https://renisal.me</span><br></br><br></br></li>;
+              return <li key={index}>{item}<br></br><br></br><span style={{ color: "#c9c9c9" }}>Opened my personal website in a new tab: https://${ website }</span><br></br><br></br></li>;
             }
             else if (item.match(new RegExp(`\\b${"source"}\\b`, 'g'))) {
               return <li key={index}>{item}<br></br><br></br><span style={{ color: "#c9c9c9" }}>Opened the source code of this site in a new tab: https://github.com/montymahato/terminal-portfolio</span><br></br><br></br></li>;
@@ -203,7 +203,7 @@ function Terminal() {
             }
             else if (item.match(new RegExp(`\\b${"aborthack"}\\b`, 'g'))) {
               return <div><li key={index}>{item}</li>
-                bash: {item.replace("guest@renisal.me:~$", '')}: ERROR - Script terminated by the user</div>;
+                bash: {item.replace(`guest@${ website }:~$` , '')}: ERROR - Script terminated by the user</div>;
             }
             else if (item.match(new RegExp(`\\b${"play"}\\b`, 'g'))) {
               if (item.match(new RegExp(`\\b${"play shutdown"}\\b`, 'g')) || item.match(new RegExp(`\\b${"play 1"}\\b`, 'g'))) {
@@ -228,19 +228,17 @@ function Terminal() {
             else if (item.match(new RegExp(`\\b${"about"}\\b`, 'g'))) {
               return <div><li key={index}>{item}</li>
                 <div className='aboutme'><br></br>
-                  Hi, nice to meet you. I'm Monty, a 19 years old CS student from India. I'm a casual programmer (doing it just for fun)
-                  <br></br><br></br>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget nisl a ligula tristique consequat. Nullam non efficitur mi. Sed nec dapibus elit. Quisque luctus, nunc et volutpat tristique, odio elit vestibulum odio, id eleifend lectus justo non dolor. Praesent vel libero id arcu bibendum bibendum
+                  { about }
                   <br></br><br></br>
                 </div>
               </div>
             } else {
               return <div><li key={index}>{item}</li>
-                bash: {item.replace("guest@renisal.me:~$", '')}: command not found</div>;
+                bash: {item.replace(`guest@${ website }:~$`, '')}: command not found</div>;
             }
           })}
         </ul>
-        {Text3.includes("Access") ? <span className='commands'><span className='userPrefix'>guest@renisal.me:~$</span> <input type="text" id="command" name="command" autoFocus></input></span> : ""}
+        {Text3.includes("Access") ? <span className='commands'><span className='userPrefix'>guest@${ website }:~$</span> <input type="text" id="command" name="command" autoFocus></input></span> : ""}
       </div>
     </div>
   );
